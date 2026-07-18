@@ -4,13 +4,17 @@
 #import "@preview/numbly:0.1.0": numbly
 
 #set text(lang: "es", font: "DepartureMono Nerd Font Mono")
-#let logo = image("resources/club_logo.svg", width: 4cm, height: 4cm)
+#let logo = block(
+  radius: 50%,
+  clip: true,
+  image("resources/full logo.jpg", width: 4cm, height: 4cm)
+)
 #let mini_logo = image("resources/mini_logo.png", width: 1.5cm, height: 1.5cm)
 
 #show: toying-theme.with(
   aspect-ratio: "16-9",
   footer: self => self.info.title,
-  header-right: self => {
+  header-prefix: self => {
     align(horizon, mini_logo)
     /*
     grid(
@@ -24,12 +28,38 @@
   config-info(
     organization: [Club de Software Libre],
     description: [Organización de desarrolladores & Software Libre],
-    title: [CSL Meetup 2026.1],
+    title: [CSL Post-mortem 2026.1],
     date: datetime.today(),
     institution: [UTEC],
     contact: [csl\@utec.edu.pe],
     logo: logo,
   ),
+  config-colors(
+    primary: rgb("#2a95e7"),
+    secondary: rgb("#5079c6b9"),
+    tertiary: rgb("#0a2d68b9"),
+
+    background-slide: gradient.linear(
+      angle: 45deg,
+      rgb("#5b80c7"),
+      rgb("#00072e"),
+      black
+    ),
+    background-section: gradient.linear(
+      angle: 45deg,
+      rgb("#5b80c7"),
+      rgb("#00072e"),
+      black
+    ),
+    background-focus: gradient.radial(
+      rgb("#2e58a8"),
+      rgb("#00072e"),
+    ),
+
+    neutral-lightest: rgb("#fafafa"),
+    neutral-dark: rgb("#23373b"),
+    neutral-darkest: rgb("#ffffff"),
+  )
 )
 
 #set heading(numbering: numbly("{1}.", default: "1.1"))

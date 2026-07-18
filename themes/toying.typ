@@ -63,16 +63,18 @@
       columns: (auto, 1fr),
       column-gutter: 10pt,
       
+      // Prefix header block
       block(
-        fill: self.colors.neutral-darkest,
+        fill: self.colors.tertiary,
         radius: 10pt,
         inset: 0.5em,
         height: 150%,
-        utils.call-or-display(self, self.store.header-right),
+        utils.call-or-display(self, self.store.header-prefix),
       ),
       
+      // Slide title block
       block(
-        fill: self.colors.primary,
+        fill: self.colors.secondary,
         radius: 10pt,
         inset: 1em,
         height: 150%,
@@ -91,7 +93,7 @@
       .5em,
       components.left-and-right(
         text(
-          fill: self.colors.neutral-darkest.lighten(40%),
+          fill: self.colors.neutral-darkest,
           utils.call-or-display(self, self.store.footer),
         ),
         text(fill: self.colors.neutral-darkest, utils.call-or-display(
@@ -102,16 +104,16 @@
     )
     if self.store.footer-progress {
       place(bottom, components.progress-bar(
-        height: 2pt,
+        height: 4pt,
         self.colors.primary,
-        self.colors.primary-light,
+        self.colors.primary-light.transparentize(100%),
       ))
     }
   }
   let self = utils.merge-dicts(
     self,
     config-page(
-      fill: self.colors.neutral-lightest,
+      fill: self.colors.background-slide,
       header: header,
       footer: footer,
     ),
@@ -307,9 +309,9 @@
         width: 100%,
         spacing: 0pt,
         components.progress-bar(
-          height: 2pt,
+          height: 5pt,
           self.colors.primary,
-          self.colors.primary-light,
+          self.colors.primary.lighten(80%),
         ),
       ),
     )
@@ -317,7 +319,7 @@
   }
   self = utils.merge-dicts(
     self,
-    config-page(fill: self.colors.neutral-lightest),
+    config-page(fill: self.colors.background-section),
   )
   touying-slide(self: self, config: config, slide-body)
 })
@@ -338,19 +340,19 @@
   self = utils.merge-dicts(
     self,
     config-common(freeze-slide-counter: true),
-    config-page(fill: self.colors.neutral-dark, margin: 2em),
+    config-page(fill: self.colors.background-focus, margin: 2em),
   )
   set text(fill: self.colors.neutral-lightest, size: 1.5em)
   touying-slide(self: self, config: config, std.align(align, body))
 })
 
 
-/// Touying metropolis theme.
+/// Touying toying theme.
 ///
 /// Example:
 ///
 /// ```typst
-/// #show: metropolis-theme.with(aspect-ratio: "16-9", config-colors(primary: blue))
+/// #show: toying-theme.with(aspect-ratio: "16-9", config-colors(primary: blue))
 /// ```
 ///
 /// Consider using:
@@ -381,7 +383,7 @@
 ///
 /// - header (content, function): The header of the slide. Default is `self => utils.display-current-heading(setting: utils.fit-to-width.with(grow: false, 100%), depth: self.slide-level)`.
 ///
-/// - header-right (content, function): The right part of the header. Default is `self => self.info.logo`.
+/// - header-prefix (content, function): The prefix part of the header. Default is `self => self.info.logo`.
 ///
 /// - footer (content, function): The footer of the slide. Default is `none`.
 ///
@@ -395,7 +397,7 @@
     setting: utils.fit-to-width.with(grow: false, 100%),
     depth: self.slide-level,
   ),
-  header-right: self => self.info.logo,
+  header-prefix: self => self.info.logo,
   footer: none,
   footer-right: context utils.slide-counter.display()
     + " / "
@@ -421,9 +423,14 @@
       alert: utils.alert-with-primary-color,
     ),
     config-colors(
-      primary: rgb("#000000"),
-      primary-light: rgb("#d6c6b7"),
-      secondary: rgb("#23373b"),
+      primary: rgb("#04364A"),
+      secondary: rgb("#176B87"),
+      tertiary: rgb("#448C95"),
+
+      background-slide: rgb("#fafafa"),
+      background-section: rgb("#fafafa"),
+      background-focus: rgb("#448C95"),
+
       neutral-lightest: rgb("#fafafa"),
       neutral-dark: rgb("#23373b"),
       neutral-darkest: rgb("#23373b"),
@@ -432,7 +439,7 @@
     config-store(
       align: align,
       header: header,
-      header-right: header-right,
+      header-prefix: header-prefix,
       footer: footer,
       footer-right: footer-right,
       footer-progress: footer-progress,
